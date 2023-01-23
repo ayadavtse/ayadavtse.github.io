@@ -1,628 +1,456 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-      "title": "Question-Data-Api",
-      "version": "1.0",
-      "description": "Api definition for Question Data Service"
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Question-Data-Api",
+    "version": "1.0",
+    "description": "Api definition for Question Data Service"
+  },
+  "servers": [
+    {
+      "url": "http://question-data.core-platform-qa.int.ppawscommon.spacer.com",
+      "description": "qa"
     },
-    "servers": [
-      {
-        "url": "http://question-data.core-platform-qa.int.ppawscommon.spacer.com",
-        "description": "qa"
-      },
-      {
-        "url": "https://question-data.core-platform-prod.int.awscommon.spacer.com",
-        "description": "prod"
-      }
-    ],
-    "paths": {
-      "/auth-handles": {
-        "post": {
-          "summary": "Create New Silent Auth Handle",
-          "security": [
-            {
-              "BearerAuth": []
-            }
-          ],
-          "operationId": "post-authHandle",
-          "responses": {
-            "201": {
-              "description": "Created",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/Post-AuthHandle-Data-Response"
-                  },
-                  "examples": {
-                    "AuthHandle created": {
-                      "value": {
-                        "data": {
-                          "authHandleRefId": "b03d70f0-8e08-4c14-8338-f9fba3514db0",
-                          "subRefId": "77398a46-93a1-41f7-bf21-f00db4adeb12",
-                          "userRefId": "875e95a5-cd8f-4eb0-93cb-3e5afee58abb",
-                          "memRefId": "eb0aa45f-af64-493a-947e-07a339d7f2dc",
-                          "globalRefId": "110050016286464C4F39B11774C42A5",
-                          "usageCounter": 0,
-                          "createdTime": 1658727792999,
-                          "authHandleTTL": 300,
-                          "createdBy": "JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad Request"
-            },
-            "401": {
-              "description": "Unauthorized"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
-          },
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Post-AuthHandle-Data-Request"
-                },
-                "examples": {
-                  "Create New AuthHandle": {
-                    "value": {
-                      "authHandleRefId": "b03d70f0-8e08-4c14-8338-f9fba3514db0",
-                      "subRefId": "77398a46-93a1-41f7-bf21-f00db4adeb12",
-                      "userRefId": "875e95a5-cd8f-4eb0-93cb-3e5afee58abb",
-                      "memRefId": "eb0aa45f-af64-493a-947e-07a339d7f2dc",
-                      "globalRefId": "110050016286464C4F39B11774C42A5",
-                      "usageCounter": 0,
-                      "createdTime": 1658727792999,
-                      "authHandleTTL": 300,
-                      "createdBy": "JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo"
-                    }
-                  }
-                }
-              }
-            },
-            "description": ""
-          },
-          "description": "Creates a new silent auth handle in silent-auth store.",
-          "tags": [
-            "AuthHandle"
-          ]
-        }
-      },
-      "/auth-handles/{authHandleRefId}": {
-        "parameters": [
+    {
+      "url": "https://question-data.core-platform-prod.int.awscommon.spacer.com",
+      "description": "prod"
+    }
+  ],
+  "paths": {
+    "/questions": {
+      "post": {
+        "summary": "Create New Question",
+        "security": [
           {
-            "schema": {
-              "type": "string"
-            },
-            "name": "authHandleRefId",
-            "example": "b03d70f0-8e08-4c14-8338-f9fba3514db0",
-            "in": "path",
-            "required": true
+            "BearerAuth": []
           }
         ],
-        "get": {
-          "summary": "Get the silent-auth Handle Info",
-          "security": [
-            {
-              "BearerAuth": []
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Success",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/Get-AuthHandle-Data-Response"
-                  },
-                  "examples": {
-                    "Get AuthHandle": {
-                      "value": {
-                        "data": {
-                          "authHandleRefId": "b03d70f0-8e08-4c14-8338-f9fba3514db0",
-                          "subRefId": "77398a46-93a1-41f7-bf21-f00db4adeb12",
-                          "userRefId": "875e95a5-cd8f-4eb0-93cb-3e5afee58abb",
-                          "memRefId": "eb0aa45f-af64-493a-947e-07a339d7f2dc",
-                          "globalRefId": "110050016286464C4F39B11774C42A5",
-                          "usageCounter": 0,
-                          "createdTime": 1658727792999,
-                          "changedTime": 1658727814572,
-                          "authHandleTTL": 300,
-                          "createdBy": "JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo",
-                          "changedBy": "JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad Request"
-            },
-            "401": {
-              "description": "Unauthorized"
-            },
-            "404": {
-              "description": "AuthHandle Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
-          },
-          "operationId": "get-authhandles-Id",
-          "description": "Api to return silent-auth Handle information based on the requested refid.",
-          "tags": [
-            "AuthHandle"
-          ]
-        },
-        "patch": {
-          "parameters": [
-            {
-              "schema": {
-                "type": "string",
-                "format": "int64"
-              },
-              "name": "currentUsageCounter",
-              "example": 0,
-              "in": "query",
-              "required": true
-            }
-          ],
-          "summary": "Update Auth Handle Info",
-          "security": [
-            {
-              "BearerAuth": []
-            }
-          ],
-          "operationId": "patch-authhandles-Id",
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/AuthHandle"
-                  },
-                  "examples": {
-                    "AuthHandle usageCounter update": {
-                      "value": {
-                        "data": {
-                          "authHandleRefId": "b03d70f0-8e08-4c14-8338-f9fba3514db0",
-                          "subRefId": "77398a46-93a1-41f7-bf21-f00db4adeb12",
-                          "userRefId": "875e95a5-cd8f-4eb0-93cb-3e5afee58abb",
-                          "memRefId": "eb0aa45f-af64-493a-947e-07a339d7f2dc",
-                          "globalRefId": "110050016286464C4F39B11774C42A5",
-                          "usageCounter": 1,
-                          "createdTime": 1658727792999,
-                          "changedTime": 1658727814572,
-                          "authHandleTTL": 300,
-                          "createdBy": "JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo",
-                          "changedBy": "JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad Request"
-            },
-            "401": {
-              "description": "Unauthorized"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
-          },
-          "description": "Api to Update the information of an existing silent-auth handle.\nNeeds to be updated when auth handle is used for token generation.",
-          "requestBody": {
+        "operationId": "post-questions",
+        "responses": {
+          "201": {
+            "description": "Created",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Patch-AuthHandle-Data-Request"
+                  "$ref": "#/components/schemas/Question"
                 },
                 "examples": {
-                  "AuthHandle usageCounter update": {
+                  "Question Created": {
                     "value": {
-                      "changedTime": 1658727814572,
-                      "changedBy": "JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo",
-                      "usageCounter": 1
+                      "data": {
+                        "questionRefId": "b03d70f0-8e08-4c14-8338-f9fba3514db0",
+                        "subTopicRefId": "77398a46-93a1-41f7-bf21-f00db4adeb12",
+                        "statements": {
+                          "incorrect": [
+                            "No demand for a grant can be made except on the recommendation of the President",
+                            "The President has the veto power over the bills passed by the Parliament"
+                          ],
+                          "correct": [
+                            "The President does not have veto power with respect to state legislation"
+                          ]
+                        },
+                        "type": "MCQ",
+                        "status": "ACTIVE",
+                        "difficulty": "HARD",
+                        "specialisation": "GENERIC",
+                        "importance": "HIGH",
+                        "reportsCount": 0,
+                        "source": {
+                          "book": "Laxmikant Polity",
+                          "edition": 2,
+                          "fromPage": 234,
+                          "toPage": 235
+                        },
+                        "solutionDesc": "The President has the veto power over the bills passed by the Parliament, that is, he can withhold his assent to the bills. The President has veto power with respect to state legislation also. A bill passed by a state legislature can become an act only if it receives the assent of the governor or the President (in case the bill is reserved for the consideration of the President).",
+                        "createdTime": 1658727792999,
+                        "createdBy": "JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo"
+                      }
                     }
                   }
                 }
               }
             }
           },
-          "tags": [
-            "AuthHandle"
-          ]
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Question"
+              },
+              "examples": {
+                "Create New Question": {
+                  "value": {
+                    "questionRefId": "b03d70f0-8e08-4c14-8338-f9fba3514db0",
+                    "subTopicRefId": "77398a46-93a1-41f7-bf21-f00db4adeb12",
+                    "statements": {
+                      "incorrect": [
+                        "No demand for a grant can be made except on the recommendation of the President",
+                        "The President has the veto power over the bills passed by the Parliament"
+                      ],
+                      "correct": [
+                        "The President does not have veto power with respect to state legislation"
+                      ]
+                    },
+                    "type": "MCQ",
+                    "status": "ACTIVE",
+                    "difficulty": "HARD",
+                    "specialisation": "GENERIC",
+                    "importance": "HIGH",
+                    "reportsCount": 0,
+                    "source": {
+                      "book": "Laxmikant Polity",
+                      "edition": 2,
+                      "fromPage": 234,
+                      "toPage": 235
+                    },
+                    "solutionDesc": "The President has the veto power over the bills passed by the Parliament, that is, he can withhold his assent to the bills. The President has veto power with respect to state legislation also. A bill passed by a state legislature can become an act only if it receives the assent of the governor or the President (in case the bill is reserved for the consideration of the President).",
+                    "createdTime": 1658727792999,
+                    "createdBy": "JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo"
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        },
+        "description": "Creates a new question in question store.",
+        "tags": [
+          "Question"
+        ]
+      }
+    },
+    "/questions/{questionRefId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "questionRefId",
+          "example": "b03d70f0-8e08-4c14-8338-f9fba3514db0",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Get the question Info",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Question"
+                },
+                "examples": {
+                  "Get AuthHandle": {
+                    "value": {
+                      "data": {
+                        "authHandleRefId": "b03d70f0-8e08-4c14-8338-f9fba3514db0",
+                        "subRefId": "77398a46-93a1-41f7-bf21-f00db4adeb12",
+                        "userRefId": "875e95a5-cd8f-4eb0-93cb-3e5afee58abb",
+                        "memRefId": "eb0aa45f-af64-493a-947e-07a339d7f2dc",
+                        "globalRefId": "110050016286464C4F39B11774C42A5",
+                        "usageCounter": 0,
+                        "createdTime": 1658727792999,
+                        "changedTime": 1658727814572,
+                        "authHandleTTL": 300,
+                        "createdBy": "JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo",
+                        "changedBy": "JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Question Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "operationId": "get-question-Id",
+        "description": "Api to return question information based on the requested refid.",
+        "tags": [
+          "Question"
+        ]
+      },
+      "patch": {
+        "summary": "Update Question Info",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "operationId": "patch-question-Id",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Question"
+                },
+                "examples": {
+                  "Question reportCount update": {
+                    "value": {
+                      "data": {
+                        "questionRefId": "b03d70f0-8e08-4c14-8338-f9fba3514db0",
+                        "reportCount": 77,
+                        "changedTime": 1658727814572,
+                        "changedBy": "JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "description": "Api to Update the information of an existing question.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Question"
+              },
+              "examples": {
+                "Question reportCount update": {
+                  "value": {
+                    "reportCount": 77,
+                    "changedTime": 1658727814572,
+                    "changedBy": "JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Question"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Question": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "example-1": {
+            "questionRefId": "b03d70f0-8e08-4c14-8338-f9fba3514db0",
+            "userRefId": "875e95a5-cd8f-4eb0-93cb-3e5afee58abb",
+            "memRefId": "eb0aa45f-af64-493a-947e-07a339d7f2dc",
+            "globalRefId": "110050016286464C4F39B11774C42A5",
+            "usageCounter": 0,
+            "createdTime": 1658727792999,
+            "changedTime": 1658727814572,
+            "createdBy": "JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo",
+            "changedBy": "JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo"
+          }
+        },
+        "properties": {
+          "questionRefId": {
+            "type": "string",
+            "minLength": 36,
+            "maxLength": 50,
+            "description": "unique question identifier",
+            "example": "b03d70f0-8e08-4c14-8338-f9fba3514db0"
+          },
+          "subTopicRefId": {
+            "type": "string",
+            "minLength": 36,
+            "maxLength": 50,
+            "description": "unique sub-topic identifier",
+            "example": "875e95a5-cd8f-4eb0-93cb-3e5afee58abb"
+          },
+          "statements": {
+            "type": "object",
+            "description": "collection of all statements/assertions that question wants to put",
+            "properties": {
+              "incorrect": {
+                "type": "array",
+                "description": "list of all incorrect statements",
+                "items": {
+                  "type": "string",
+                  "minItems": 0,
+                  "maxItems": 5
+                },
+                "example": [
+                  "No demand for a grant can be made except on the recommendation of the President."
+                ]
+              },
+              "correct": {
+                "type": "array",
+                "description": "list of all correct statements",
+                "items": {
+                  "type": "string",
+                  "minItems": 1,
+                  "maxItems": 5
+                },
+                "example": [
+                  "The President does not have veto power with respect to state legislation"
+                ]
+              }
+            }
+          },
+          "difficulty": {
+            "type": "string",
+            "description": "difficulty level of the question",
+            "enum": [
+              "VERY_EASY",
+              "EASY",
+              "MEDIUM",
+              "HARD",
+              "EXTREME"
+            ],
+            "default": "HARD"
+          },
+          "specialisation": {
+            "type": "string",
+            "description": "level of specialisation of question. Specialisation level increases when questions moves from generic to details oriented",
+            "enum": [
+              "GENERIC",
+              "SPECIALISED",
+              "HIGHLY_SPECIALISED"
+            ],
+            "default": "GENERIC"
+          },
+          "importance": {
+            "type": "string",
+            "description": "difficulty level of the question",
+            "enum": [
+              "LOW",
+              "NORMAL",
+              "HIGH",
+              "VERY_HIGH"
+            ],
+            "default": "NORMAL"
+          },
+          "status": {
+            "type": "string",
+            "description": "status of the question",
+            "enum": [
+              "ACTIVE",
+              "DORMAT",
+              "INACTIVE"
+            ],
+            "default": "ACTIVE"
+          },
+          "type": {
+            "type": "string",
+            "description": "type of the question\n\n`MCQ` multiple choice question\n\n`MSA` multiple selection question\n\n`NAT` numerical answer type\n",
+            "enum": [
+              "MCQ",
+              "MSA",
+              "NAT"
+            ],
+            "default": "MCQ"
+          },
+          "reportsCount": {
+            "type": "integer",
+            "format": "int",
+            "description": "number of times question is reported to be rechecked"
+          },
+          "source": {
+            "type": "object",
+            "description": "information on question source",
+            "properties": {
+              "book": {
+                "type": "string",
+                "description": "name of the book",
+                "example": "Laxmikant Polity"
+              },
+              "edition": {
+                "type": "integer",
+                "description": "edition of book",
+                "minimum": 1,
+                "default": 1,
+                "example": 6
+              },
+              "fromPage": {
+                "type": "integer",
+                "format": "int64",
+                "description": "page number where the question starts",
+                "example": 345
+              },
+              "toPage": {
+                "type": "integer",
+                "format": "int64",
+                "description": "page number where the question starts",
+                "example": 346
+              }
+            }
+          },
+          "solutionDesc": {
+            "type": "string",
+            "description": "detailed solution to the question",
+            "example": "The President has the veto power over the bills passed by the Parliament, that is, he can withhold his assent to the bills.\n  \nThe President has veto power with respect to state legislation also. A bill passed by a state legislature can become an act only if it receives the assent of the governor or the President (in case the bill is reserved for the consideration of the President).\n"
+          },
+          "createdTime": {
+            "type": "integer",
+            "format": "int64",
+            "description": "time of question creation in millisec"
+          },
+          "changedTime": {
+            "type": "integer",
+            "format": "int64",
+            "description": "time of question recent update in millisec"
+          },
+          "deletedTime": {
+            "type": "integer",
+            "format": "int64",
+            "description": "time of question soft deletion in millisec"
+          },
+          "createdBy": {
+            "type": "string",
+            "minLength": 1,
+            "description": "identifier of api caller"
+          },
+          "changedBy": {
+            "type": "string",
+            "minLength": 1,
+            "description": "identifier of api caller"
+          }
         }
       }
     },
-    "components": {
-      "schemas": {
-        "Post-AuthHandle-Data-Request": {
-          "description": "",
-          "type": "object",
-          "x-examples": {
-            "example-1": {
-              "authHandleRefId": "b03d70f0-8e08-4c14-8338-f9fba3514db0",
-              "subRefId": "77398a46-93a1-41f7-bf21-f00db4adeb12",
-              "userRefId": "875e95a5-cd8f-4eb0-93cb-3e5afee58abb",
-              "memRefId": "eb0aa45f-af64-493a-947e-07a339d7f2dc",
-              "globalRefId": "110050016286464C4F39B11774C42A5",
-              "usageCounter": 0,
-              "createdTime": 1658727792999,
-              "authHandleTTL": 300,
-              "createdBy": "JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo"
-            }
-          },
-          "properties": {
-            "authHandleRefId": {
-              "type": "string",
-              "minLength": 1,
-              "description": "unique silent auth handle identifier"
-            },
-            "subRefId": {
-              "type": "string",
-              "minLength": 1,
-              "description": "unique subscription identifier"
-            },
-            "userRefId": {
-              "type": "string",
-              "minLength": 1,
-              "description": "unique user identifier"
-            },
-            "memRefId": {
-              "type": "string",
-              "minLength": 1,
-              "description": "unique member identifier"
-            },
-            "globalRefId": {
-              "type": "string",
-              "minLength": 1,
-              "description": "unique user grid identifier"
-            },
-            "usageCounter": {
-              "type": "integer",
-              "format": "int64",
-              "description": "number of times auth handle is used"
-            },
-            "createdTime": {
-              "type": "integer",
-              "format": "int64",
-              "description": "time of auth handle creation in millisec"
-            },
-            "authHandleTTL": {
-              "type": "integer",
-              "format": "int64",
-              "description": "auth handle ttl in sec"
-            },
-            "createdBy": {
-              "type": "string",
-              "minLength": 1,
-              "description": "unique identifier of api user"
-            }
-          },
-          "required": [
-            "authHandleRefId",
-            "createdTime",
-            "authHandleTTL",
-            "createdBy"
-          ]
-        },
-        "Patch-AuthHandle-Data-Request": {
-          "description": "",
-          "type": "object",
-          "x-examples": {
-            "example-1": {
-              "changedTime": 1658727814572,
-              "changedBy": "JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo",
-              "usageCounter": 2
-            }
-          },
-          "properties": {
-            "changedTime": {
-              "type": "integer",
-              "format": "int64",
-              "description": "timestamp of auth handle recent update in millisec"
-            },
-            "changedBy": {
-              "type": "string",
-              "minLength": 1,
-              "description": "unique identifier of api user"
-            },
-            "usageCounter": {
-              "type": "integer",
-              "format": "int64",
-              "minimum": 1,
-              "description": "number of times auth handle is used"
-            }
-          },
-          "required": [
-            "changedTime",
-            "changedBy",
-            "usageCounter"
-          ]
-        },
-        "Get-AuthHandle-Data-Response": {
-          "title": "Get-AuthHandle-Data-Response",
-          "type": "object",
-          "properties": {
-            "data": {
-              "$ref": "#/components/schemas/AuthHandle"
-            }
-          }
-        },
-        "Post-AuthHandle-Data-Response": {
-          "title": "Post-AuthHandle-Data-Response",
-          "type": "object",
-          "properties": {
-            "data": {
-              "$ref": "#/components/schemas/Post-AuthHandle-Data-Request"
-            }
-          }
-        },
-        "AuthHandle": {
-          "description": "",
-          "type": "object",
-          "x-examples": {
-            "example-1": {
-              "authHandleRefId": "b03d70f0-8e08-4c14-8338-f9fba3514db0",
-              "subRefId": "77398a46-93a1-41f7-bf21-f00db4adeb12",
-              "userRefId": "875e95a5-cd8f-4eb0-93cb-3e5afee58abb",
-              "memRefId": "eb0aa45f-af64-493a-947e-07a339d7f2dc",
-              "globalRefId": "110050016286464C4F39B11774C42A5",
-              "usageCounter": 0,
-              "createdTime": 1658727792999,
-              "changedTime": 1658727814572,
-              "createdBy": "JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo",
-              "changedBy": "JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo"
-            }
-          },
-          "properties": {
-            "authHandleRefId": {
-              "type": "string",
-              "minLength": 1,
-              "description": "unique silent auth handle identifier"
-            },
-            "subRefId": {
-              "type": "string",
-              "minLength": 1,
-              "description": "unique subscription identifier"
-            },
-            "userRefId": {
-              "type": "string",
-              "minLength": 1,
-              "description": "unique user identifier"
-            },
-            "memRefId": {
-              "type": "string",
-              "minLength": 1,
-              "description": "unique member identifier"
-            },
-            "globalRefId": {
-              "type": "string",
-              "minLength": 1,
-              "description": "unique user grid identifier"
-            },
-            "usageCounter": {
-              "type": "integer",
-              "format": "int64",
-              "description": "number of times auth handle is used"
-            },
-            "createdTime": {
-              "type": "integer",
-              "format": "int64",
-              "description": "time of auth handle creation in millisec"
-            },
-            "changedTime": {
-              "type": "integer",
-              "format": "int64",
-              "description": "time of auth handle recent update in millisec"
-            },
-            "authHandleTTL": {
-              "type": "integer",
-              "format": "int64",
-              "description": "auth handle ttl in sec"
-            },
-            "createdBy": {
-              "type": "string",
-              "minLength": 1,
-              "description": "unique identifier of api user"
-            },
-            "changedBy": {
-              "type": "string",
-              "minLength": 1,
-              "description": "unique identifier of api user"
-            }
-          }
-        },
-        "Question": {
-          "description": "",
-          "type": "object",
-          "x-examples": {
-            "example-1": {
-              "questionRefId": "b03d70f0-8e08-4c14-8338-f9fba3514db0",
-              "userRefId": "875e95a5-cd8f-4eb0-93cb-3e5afee58abb",
-              "memRefId": "eb0aa45f-af64-493a-947e-07a339d7f2dc",
-              "globalRefId": "110050016286464C4F39B11774C42A5",
-              "usageCounter": 0,
-              "createdTime": 1658727792999,
-              "changedTime": 1658727814572,
-              "createdBy": "JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo",
-              "changedBy": "JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo"
-            }
-          },
-          "properties": {
-            "questionRefId": {
-              "type": "string",
-              "minLength": 36,
-              "maxLength": 50,
-              "description": "unique question identifier",
-              "example": "b03d70f0-8e08-4c14-8338-f9fba3514db0"
-            },
-            "subTopicRefId": {
-              "type": "string",
-              "minLength": 36,
-              "maxLength": 50,
-              "description": "unique sub-topic identifier",
-              "example": "875e95a5-cd8f-4eb0-93cb-3e5afee58abb"
-            },
-            "statements": {
-              "type": "object",
-              "description": "collection of all statements/assertions that question wants to put",
-              "properties": {
-                "incorrect": {
-                  "type": "array",
-                  "description": "list of all incorrect statements",
-                  "items": {
-                    "type": "string",
-                    "minItems": 0,
-                    "maxItems": 5
-                  },
-                  "example": [
-                    "No demand for a grant can be made except on the recommendation of the President."
-                  ]
-                },
-                "correct": {
-                  "type": "array",
-                  "description": "list of all correct statements",
-                  "items": {
-                    "type": "string",
-                    "minItems": 1,
-                    "maxItems": 5
-                  },
-                  "example": [
-                    "The President does not have veto power with respect to state legislation"
-                  ]
-                }
-              }
-            },
-            "difficulty": {
-              "type": "string",
-              "description": "difficulty level of the question",
-              "enum": [
-                "VERY_EASY",
-                "EASY",
-                "MEDIUM",
-                "HARD",
-                "VERY_HARD"
-              ],
-              "default": "HARD"
-            },
-            "specialisation": {
-              "type": "string",
-              "description": "level of specialisation of question. Specialisation level increases when questions moves from generic to details oriented",
-              "enum": [
-                "GENERIC",
-                "SPECIALISED",
-                "HIGHLY_SPECIALISED"
-              ],
-              "default": "GENERIC"
-            },
-            "importance": {
-              "type": "string",
-              "description": "difficulty level of the question",
-              "enum": [
-                "LOW",
-                "NORMAL",
-                "HIGH",
-                "VERY_HIGH"
-              ],
-              "default": "NORMAL"
-            },
-            "status": {
-              "type": "string",
-              "description": "status of the question",
-              "enum": [
-                "ACTIVE",
-                "DORMAT",
-                "INACTIVE"
-              ],
-              "default": "ACTIVE"
-            },
-            "type": {
-              "type": "string",
-              "description": "type of the question\n\n`MCQ` multiple choice question\n\n`MSA` multiple selection question\n\n`NAT` numerical answer type\n",
-              "enum": [
-                "MCQ",
-                "MSA",
-                "NAT"
-              ],
-              "default": "MCQ"
-            },
-            "reportsCount": {
-              "type": "integer",
-              "format": "int",
-              "description": "number of times question is reported to be rechecked"
-            },
-            "source": {
-              "type": "object",
-              "description": "information on question source",
-              "properties": {
-                "book": {
-                  "type": "string",
-                  "description": "name of the book",
-                  "example": [
-                    "Laxmikant Polity"
-                  ]
-                },
-                "fromPage": {
-                  "type": "integer",
-                  "format": "int64",
-                  "description": "page number where the question starts",
-                  "example": 345
-                },
-                "toPage": {
-                  "type": "integer",
-                  "format": "int64",
-                  "description": "page number where the question starts",
-                  "example": 346
-                }
-              }
-            },
-            "solutionDesc": {
-              "type": "string",
-              "description": "detailed solution to the question",
-              "example": "The President has the veto power over the bills passed by the Parliament, that is, he can withhold his assent to the bills.\n  \nThe President has veto power with respect to state legislation also. A bill passed by a state legislature can become an act only if it receives the assent of the governor or the President (in case the bill is reserved for the consideration of the President).\n"
-            },
-            "createdTime": {
-              "type": "integer",
-              "format": "int64",
-              "description": "time of question creation in millisec"
-            },
-            "changedTime": {
-              "type": "integer",
-              "format": "int64",
-              "description": "time of question recent update in millisec"
-            },
-            "createdBy": {
-              "type": "string",
-              "minLength": 1,
-              "description": "question of api user"
-            },
-            "changedBy": {
-              "type": "string",
-              "minLength": 1,
-              "description": "question of api user"
-            }
-          }
-        }
-      },
-      "securitySchemes": {
-        "BearerAuth": {
-          "type": "http",
-          "scheme": "bearer"
-        }
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
       }
     }
   }
+}

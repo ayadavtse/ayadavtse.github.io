@@ -9,31 +9,42 @@ servers:
   - url: https://question-data.core-platform-prod.int.awscommon.spacer.com
     description: prod
 paths:
-  /auth-handles:
+  /questions:
     post:
-      summary: Create New Silent Auth Handle
+      summary: Create New Question
       security:
         - BearerAuth: []
-      operationId: post-authHandle
+      operationId: post-questions
       responses:
         '201':
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Post-AuthHandle-Data-Response'
+                $ref: '#/components/schemas/Question'
               examples:
-                AuthHandle created:
+                Question Created:
                   value:
                     data:
-                      authHandleRefId: b03d70f0-8e08-4c14-8338-f9fba3514db0
-                      subRefId: 77398a46-93a1-41f7-bf21-f00db4adeb12
-                      userRefId: 875e95a5-cd8f-4eb0-93cb-3e5afee58abb
-                      memRefId: eb0aa45f-af64-493a-947e-07a339d7f2dc
-                      globalRefId: 110050016286464C4F39B11774C42A5
-                      usageCounter: 0
+                      questionRefId: b03d70f0-8e08-4c14-8338-f9fba3514db0
+                      subTopicRefId: 77398a46-93a1-41f7-bf21-f00db4adeb12
+                      statements:
+                        incorrect: [No demand for a grant can be made except on the recommendation of the President, The President has the veto power over the bills passed by the Parliament]
+                                   
+                        correct: [The President does not have veto power with respect to state legislation]
+                      type: MCQ
+                      status: ACTIVE
+                      difficulty: HARD
+                      specialisation: GENERIC
+                      importance: HIGH
+                      reportsCount: 0
+                      source:
+                        book: Laxmikant Polity
+                        edition: 2
+                        fromPage: 234
+                        toPage: 235
+                      solutionDesc: The President has the veto power over the bills passed by the Parliament, that is, he can withhold his assent to the bills. The President has veto power with respect to state legislation also. A bill passed by a state legislature can become an act only if it receives the assent of the governor or the President (in case the bill is reserved for the consideration of the President).
                       createdTime: 1658727792999
-                      authHandleTTL: 300
                       createdBy: JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo
         '400':
           description: Bad Request
@@ -45,33 +56,44 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Post-AuthHandle-Data-Request'
+              $ref: '#/components/schemas/Question'
             examples:
-              Create New AuthHandle:
+              Create New Question:
                 value:
-                  authHandleRefId: b03d70f0-8e08-4c14-8338-f9fba3514db0
-                  subRefId: 77398a46-93a1-41f7-bf21-f00db4adeb12
-                  userRefId: 875e95a5-cd8f-4eb0-93cb-3e5afee58abb
-                  memRefId: eb0aa45f-af64-493a-947e-07a339d7f2dc
-                  globalRefId: 110050016286464C4F39B11774C42A5
-                  usageCounter: 0
+                  questionRefId: b03d70f0-8e08-4c14-8338-f9fba3514db0
+                  subTopicRefId: 77398a46-93a1-41f7-bf21-f00db4adeb12
+                  statements:
+                    incorrect: [No demand for a grant can be made except on the recommendation of the President, The President has the veto power over the bills passed by the Parliament]
+                               
+                    correct: [The President does not have veto power with respect to state legislation]
+                  type: MCQ
+                  status: ACTIVE
+                  difficulty: HARD
+                  specialisation: GENERIC
+                  importance: HIGH
+                  reportsCount: 0
+                  source:
+                    book: Laxmikant Polity
+                    edition: 2
+                    fromPage: 234
+                    toPage: 235
+                  solutionDesc: The President has the veto power over the bills passed by the Parliament, that is, he can withhold his assent to the bills. The President has veto power with respect to state legislation also. A bill passed by a state legislature can become an act only if it receives the assent of the governor or the President (in case the bill is reserved for the consideration of the President).
                   createdTime: 1658727792999
-                  authHandleTTL: 300
                   createdBy: JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo
         description: ''
-      description: Creates a new silent auth handle in silent-auth store.
+      description: Creates a new question in question store.
       tags:
-        - AuthHandle
-  /auth-handles/{authHandleRefId}:
+        - Question
+  /questions/{questionRefId}:
     parameters:
       - schema:
           type: string
-        name: authHandleRefId
+        name: questionRefId
         example: b03d70f0-8e08-4c14-8338-f9fba3514db0
         in: path
         required: true
     get:
-      summary: Get the silent-auth Handle Info
+      summary: Get the question Info
       security:
         - BearerAuth: []
       responses:
@@ -80,7 +102,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Get-AuthHandle-Data-Response'
+                $ref: '#/components/schemas/Question'
               examples:
                 Get AuthHandle:
                   value:
@@ -101,47 +123,32 @@ paths:
         '401':
           description: Unauthorized
         '404':
-          description: AuthHandle Not Found
+          description: Question Not Found
         '500':
           description: Internal Server Error
-      operationId: get-authhandles-Id
-      description: Api to return silent-auth Handle information based on the requested refid.
+      operationId: get-question-Id
+      description: Api to return question information based on the requested refid.
       tags:
-        - AuthHandle
+        - Question
     patch:
-      parameters:
-        - schema:
-            type: string
-            format: int64
-          name: currentUsageCounter
-          example: 0
-          in: query
-          required: true
-      summary: Update Auth Handle Info
+      summary: Update Question Info
       security:
         - BearerAuth: []
-      operationId: patch-authhandles-Id
+      operationId: patch-question-Id
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AuthHandle'
+                $ref: '#/components/schemas/Question'
               examples:
-                AuthHandle usageCounter update:
+                Question reportCount update:
                   value:
                     data:
-                      authHandleRefId: b03d70f0-8e08-4c14-8338-f9fba3514db0
-                      subRefId: 77398a46-93a1-41f7-bf21-f00db4adeb12
-                      userRefId: 875e95a5-cd8f-4eb0-93cb-3e5afee58abb
-                      memRefId: eb0aa45f-af64-493a-947e-07a339d7f2dc
-                      globalRefId: 110050016286464C4F39B11774C42A5
-                      usageCounter: 1
-                      createdTime: 1658727792999
+                      questionRefId: b03d70f0-8e08-4c14-8338-f9fba3514db0
+                      reportCount: 77
                       changedTime: 1658727814572
-                      authHandleTTL: 300
-                      createdBy: JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo
                       changedBy: JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo
         '400':
           description: Bad Request
@@ -149,178 +156,22 @@ paths:
           description: Unauthorized
         '500':
           description: Internal Server Error
-      description: |-
-        Api to Update the information of an existing silent-auth handle.
-        Needs to be updated when auth handle is used for token generation.
+      description: Api to Update the information of an existing question.
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Patch-AuthHandle-Data-Request'
+              $ref: '#/components/schemas/Question'
             examples:
-              AuthHandle usageCounter update:
+              Question reportCount update:
                 value:
+                  reportCount: 77
                   changedTime: 1658727814572
                   changedBy: JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo
-                  usageCounter: 1
       tags:
-        - AuthHandle
+        - Question
 components:
   schemas:
-    Post-AuthHandle-Data-Request:
-      description: ''
-      type: object
-      x-examples:
-        example-1:
-          authHandleRefId: b03d70f0-8e08-4c14-8338-f9fba3514db0
-          subRefId: 77398a46-93a1-41f7-bf21-f00db4adeb12
-          userRefId: 875e95a5-cd8f-4eb0-93cb-3e5afee58abb
-          memRefId: eb0aa45f-af64-493a-947e-07a339d7f2dc
-          globalRefId: 110050016286464C4F39B11774C42A5
-          usageCounter: 0
-          createdTime: 1658727792999
-          authHandleTTL: 300
-          createdBy: JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo
-      properties:
-        authHandleRefId:
-          type: string
-          minLength: 1
-          description: unique silent auth handle identifier
-        subRefId:
-          type: string
-          minLength: 1
-          description: unique subscription identifier
-        userRefId:
-          type: string
-          minLength: 1
-          description: unique user identifier
-        memRefId:
-          type: string
-          minLength: 1
-          description: unique member identifier
-        globalRefId:
-          type: string
-          minLength: 1
-          description: unique user grid identifier
-        usageCounter:
-          type: integer
-          format: int64
-          description: number of times auth handle is used
-        createdTime:
-          type: integer
-          format: int64
-          description: time of auth handle creation in millisec
-        authHandleTTL:
-          type: integer
-          format: int64
-          description: auth handle ttl in sec
-        createdBy:
-          type: string
-          minLength: 1
-          description: unique identifier of api user
-      required:
-        - authHandleRefId
-        - createdTime
-        - authHandleTTL
-        - createdBy
-    Patch-AuthHandle-Data-Request:
-      description: ''
-      type: object
-      x-examples:
-        example-1:
-          changedTime: 1658727814572
-          changedBy: JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo
-          usageCounter: 2
-      properties:
-        changedTime:
-          type: integer
-          format: int64
-          description: timestamp of auth handle recent update in millisec
-        changedBy:
-          type: string
-          minLength: 1
-          description: unique identifier of api user
-        usageCounter:
-          type: integer
-          format: int64
-          minimum: 1
-          description: number of times auth handle is used
-      required:
-        - changedTime
-        - changedBy
-        - usageCounter
-    Get-AuthHandle-Data-Response:
-      title: Get-AuthHandle-Data-Response
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/AuthHandle'
-    Post-AuthHandle-Data-Response:
-      title: Post-AuthHandle-Data-Response
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/Post-AuthHandle-Data-Request'
-    AuthHandle:
-      description: ''
-      type: object
-      x-examples:
-        example-1:
-          authHandleRefId: b03d70f0-8e08-4c14-8338-f9fba3514db0
-          subRefId: 77398a46-93a1-41f7-bf21-f00db4adeb12
-          userRefId: 875e95a5-cd8f-4eb0-93cb-3e5afee58abb
-          memRefId: eb0aa45f-af64-493a-947e-07a339d7f2dc
-          globalRefId: 110050016286464C4F39B11774C42A5
-          usageCounter: 0
-          createdTime: 1658727792999
-          changedTime: 1658727814572
-          createdBy: JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo
-          changedBy: JQGf1VbMKc2k6oXy5dMdWEBod8DECYqo
-      properties:
-        authHandleRefId:
-          type: string
-          minLength: 1
-          description: unique silent auth handle identifier
-        subRefId:
-          type: string
-          minLength: 1
-          description: unique subscription identifier
-        userRefId:
-          type: string
-          minLength: 1
-          description: unique user identifier
-        memRefId:
-          type: string
-          minLength: 1
-          description: unique member identifier
-        globalRefId:
-          type: string
-          minLength: 1
-          description: unique user grid identifier
-        usageCounter:
-          type: integer
-          format: int64
-          description: number of times auth handle is used
-        createdTime:
-          type: integer
-          format: int64
-          description: time of auth handle creation in millisec
-        changedTime:
-          type: integer
-          format: int64
-          description: time of auth handle recent update in millisec
-        authHandleTTL:
-          type: integer
-          format: int64
-          description: auth handle ttl in sec
-        createdBy:
-          type: string
-          minLength: 1
-          description: unique identifier of api user
-        changedBy:
-          type: string
-          minLength: 1
-          description: unique identifier of api user
     Question:
       description: ''
       type: object
@@ -371,7 +222,7 @@ components:
         difficulty:
           type: string
           description: difficulty level of the question
-          enum: [VERY_EASY, EASY, MEDIUM, HARD, VERY_HARD]
+          enum: [VERY_EASY, EASY, MEDIUM, HARD, EXTREME]
           default: HARD
         specialisation:
           type: string
@@ -411,7 +262,13 @@ components:
             book:
               type: string
               description: name of the book
-              example: ['Laxmikant Polity']
+              example: Laxmikant Polity
+            edition:
+              type: integer
+              description: edition of book
+              minimum: 1
+              default: 1
+              example: 6
             fromPage:
               type: integer
               format: int64
@@ -437,14 +294,18 @@ components:
           type: integer
           format: int64
           description: time of question recent update in millisec
+        deletedTime:
+          type: integer
+          format: int64
+          description: time of question soft deletion in millisec
         createdBy:
           type: string
           minLength: 1
-          description: question of api user
+          description: identifier of api caller
         changedBy:
           type: string
           minLength: 1
-          description: question of api user
+          description: identifier of api caller
   securitySchemes:
     BearerAuth:
       type: http
